@@ -1,0 +1,23 @@
+const uint8_t BTN_PIN = 2;
+const uint8_t LED_PIN = 13;
+
+uint8_t buttonPrevState = LOW;
+
+
+void setup()
+{
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  pinMode(LED_PIN, OUTPUT);
+  attachInterrupt(0,pin_ISR,CHANGE);
+}
+
+void loop()
+{
+ 
+}
+
+void pin_ISR()
+{
+  buttonPrevState = digitalRead(BTN_PIN);
+  digitalWrite(LED_PIN, buttonPrevState);
+}
