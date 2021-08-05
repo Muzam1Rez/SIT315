@@ -1,0 +1,44 @@
+//assigns pin number to variables
+const uint8_t BTN_PIN = 2;
+const uint8_t LED_PIN = 13;
+
+//Global variables with values assigned
+uint8_t buttonPrevState = LOW;
+uint8_t ledState = LOW;
+
+//function to initialize the sketch
+void setup()
+{
+  //set pin 2 for input from button
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  //set pin 13 as output
+  pinMode(LED_PIN, OUTPUT);
+  //sets the speed of communication between arduino and serial monitor to 9600 bits/sec
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  //read the input from pin 2 and store it into a variable
+  uint8_t buttonState = digitalRead(BTN_PIN);
+  
+  //Print the buttonstate, its previous state and led state to serial monitor
+  Serial.print(buttonState);
+  Serial.print(buttonPrevState);
+  Serial.print(ledState);
+  Serial.println("");
+  
+  
+  //condition to check if the button is pressed
+  //if it is, turn on the led
+  if(buttonState != buttonPrevState)
+  {
+    ledState = !ledState;
+    digitalWrite(LED_PIN, ledState);
+  }
+  
+  buttonPrevState = buttonState;
+    
+  //hold the state for half a second
+  delay(500);
+}
