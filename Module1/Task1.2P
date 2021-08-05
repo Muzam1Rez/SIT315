@@ -1,23 +1,36 @@
-const uint8_t BTN_PIN = 2;
+// C++ code
+
+
+const uint8_t MOT_PIN = 2;
 const uint8_t LED_PIN = 13;
 
-uint8_t buttonPrevState = LOW;
+uint8_t MOTPrevState = LOW;
+//uint8_t ledState = LOW;
 
+//int motionReading = 0;
 
 void setup()
 {
-  pinMode(BTN_PIN, INPUT_PULLUP);
+  pinMode(MOT_PIN, INPUT);
   pinMode(LED_PIN, OUTPUT);
   attachInterrupt(0,pin_ISR,CHANGE);
+  Serial.begin(9600);
 }
 
 void loop()
 {
- 
-}
-
+  
+  }
 void pin_ISR()
-{
-  buttonPrevState = digitalRead(BTN_PIN);
-  digitalWrite(LED_PIN, buttonPrevState);
-}
+	{
+  MOTPrevState = digitalRead(MOT_PIN);
+  digitalWrite(LED_PIN, MOTPrevState);
+  uint8_t ledState = digitalRead(LED_PIN);
+  
+  uint8_t motionReading = digitalRead(MOT_PIN);
+  
+  //Print the Motion Sensor and Led state to serial monitor
+  Serial.print(motionReading);
+  Serial.print(ledState);
+  Serial.println("");
+	}
