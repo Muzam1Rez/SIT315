@@ -1,44 +1,35 @@
-//assigns pin number to variables
-const uint8_t BTN_PIN = 2;
+// C++ code
+
+
+const uint8_t MOT_PIN = 2;
 const uint8_t LED_PIN = 13;
 
-//Global variables with values assigned
-uint8_t buttonPrevState = LOW;
+uint8_t MOTPrevState = LOW;
 uint8_t ledState = LOW;
 
-//function to initialize the sketch
+//int motionReading = 0;
+
 void setup()
 {
-  //set pin 2 for input from button
-  pinMode(BTN_PIN, INPUT_PULLUP);
-  //set pin 13 as output
+  pinMode(MOT_PIN, INPUT);
   pinMode(LED_PIN, OUTPUT);
-  //sets the speed of communication between arduino and serial monitor to 9600 bits/sec
   Serial.begin(9600);
 }
 
 void loop()
 {
-  //read the input from pin 2 and store it into a variable
-  uint8_t buttonState = digitalRead(BTN_PIN);
+  uint8_t motionReading = digitalRead(MOT_PIN);
   
-  //Print the buttonstate, its previous state and led state to serial monitor
-  Serial.print(buttonState);
-  Serial.print(buttonPrevState);
+  //Print the Motion Sensor and Led state to serial monitor
+  Serial.print(motionReading);
   Serial.print(ledState);
   Serial.println("");
-  
-  
-  //condition to check if the button is pressed
-  //if it is, turn on the led
-  if(buttonState != buttonPrevState)
-  {
+
+  if (motionReading == HIGH) {
     ledState = !ledState;
     digitalWrite(LED_PIN, ledState);
+	}
+  else{
+    digitalWrite(LED_PIN, LOW);
   }
-  
-  buttonPrevState = buttonState;
-    
-  //hold the state for half a second
-  delay(500);
 }
