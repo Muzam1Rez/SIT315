@@ -1,0 +1,62 @@
+
+
+// C++ code
+
+//Pins Config
+const uint8_t sen_pin = 2;
+const uint8_t button_pin = 3;
+
+const uint8_t LED_PIN = 13;
+const uint8_t LED2_PIN = 12;
+
+
+//Global variables
+uint8_t SensorPrevState = LOW;
+
+//define pin modes and interrupts
+void setup()
+{
+	pinMode(sen_pin, INPUT);
+  	pinMode(button_pin, INPUT);
+  	pinMode(LED_PIN, OUTPUT);
+  	pinMode(LED2_PIN, OUTPUT);
+  	attachInterrupt(0,pin_ISR,CHANGE);
+  	attachInterrupt(1,pin2_ISR,CHANGE);
+  	Serial.begin(9600);
+}
+
+void loop()
+{
+	
+}
+
+//interrupts in Sensor
+void pin_ISR()
+{
+	SensorPrevState = digitalRead(sen_pin);
+  	digitalWrite(LED_PIN, SensorPrevState);
+  	uint8_t ledState = digitalRead(LED_PIN);
+  
+  	uint8_t sensorReading = digitalRead(sen_pin);
+  
+  	//Display result in serial monitor
+  	Serial.print(sensorReading);
+  	Serial.print(ledState);
+  	Serial.println(": Sensor");
+}
+
+//interrupts in button
+void pin2_ISR()
+{
+	SensorPrevState = digitalRead(button_pin);
+  	digitalWrite(LED2_PIN, SensorPrevState);
+  	uint8_t ledState = digitalRead(LED2_PIN);
+  
+  	uint8_t buttonReading = digitalRead(button_pin);
+  
+  	//Display result in serial monitor
+  	Serial.print(buttonReading);
+  	Serial.print(ledState);
+  	Serial.println(": Button");
+
+}
